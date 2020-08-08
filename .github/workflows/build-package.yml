@@ -1,0 +1,8 @@
+jobs:
+  build-package:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Build package	    
+      uses: docker://${{ github.repository }}:latest
+      env:
+        COPR_TOKEN: ${{secrets.COPR_TOKEN}}
