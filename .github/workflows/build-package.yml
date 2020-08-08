@@ -11,8 +11,9 @@ on:
 
 jobs:
   build-package:
-    container: japz/build-bcache-kernel
+    runs-on: ubuntu-latest
+    container: 
+      image: japz/build-bcache-kernel
       env:
         COPR_TOKEN: ${{secrets.COPR_TOKEN}}
-      args:
-        - ${{ inputs.version }}
+        VERSION: ${{ inputs.version }}
