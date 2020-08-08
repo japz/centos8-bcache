@@ -1,12 +1,18 @@
+name: Build Package
+
 on:
-  repository_dispatch:
-    types: build-package
+  workflow_dispatch:
+    inputs:
+      version:
+        # Which version (tag in centos kernel repo) to build. Defaults to latest c8
+        description: 'Version'
+        default: c8
+        required: false
 
 jobs:
   build-package:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Build package	    
-      uses: docker://${{ github.repository }}:latest
+    container: japz/build-bcache-kernel
       env:
         COPR_TOKEN: ${{secrets.COPR_TOKEN}}
+      args:
+        - ${{ inputs.version }}
