@@ -30,5 +30,5 @@ jobs:
         COPR_TOKEN: ${{secrets.COPR_TOKEN}}
 
     - name: Run image
-      run: docker run -it --name builder -v $GITHUB_WORKSPACE:/workspace -v copr-token:/rpmbuild/.config/copr -w /workspace docker.pkg.github.com/$GITHUB_REPOSITORY/build-bcache-kernel:latest
+      run: docker run --name builder -v $GITHUB_WORKSPACE:/workspace -v copr-token:/rpmbuild/.config/copr -w /workspace docker.pkg.github.com/$GITHUB_REPOSITORY/build-bcache-kernel:latest
 
