@@ -12,4 +12,4 @@ RUN git clone  https://git.centos.org/centos-git-common.git; \
     mkdir ~/bin; \
     ln -s ~/centos-git-common/get_sources.sh ~/bin/get_sources.sh;
 
-CMD /bin/bash
+ENTRYPOINT [ "/rpmbuild/build-srpm.sh" ]
