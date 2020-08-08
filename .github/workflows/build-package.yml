@@ -12,8 +12,23 @@ on:
 jobs:
   build-package:
     runs-on: ubuntu-latest
-    container: 
-      image: japz/build-bcache-kernel
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Docker login
+      run: docker login docker.pkg.github.com -u $GITHUB_ACTOR -p $GITHUB_TOKEN
+      env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+    - name: Pull Docker image
+      run: docker pull "docker.pkg.github.com/$GITHUB_REPOSITORY/build-bcache-kernel:latest"
+
+    - name: Set COPR token
+      run: echo "$COPR_TOKEN" > copr-token
       env:
         COPR_TOKEN: ${{secrets.COPR_TOKEN}}
-        VERSION: ${{ inputs.version }}
+
+    - name: Run image
+      run: docker run -it --name builder -v $GITHUB_WORKSPACE:/workspace -v copr-token:/rpmbuild/.config/copr -w /workspace docker.pkg.github.com/$GITHUB_REPOSITORY/build-bcache-kernel:latest ${{ inputs.version }}
+
