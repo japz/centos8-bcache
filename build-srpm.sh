@@ -22,6 +22,7 @@ if [ "$COPR_TOKEN" != "" ]; then
     cat > ~/.config/copr << EOF
 $COPR_TOKEN
 EOF
+fi
 
 if [ -f ~/.config/copr ]; then
     if ! copr-cli list-packages bcache | grep $rpmname; then
